@@ -18,15 +18,18 @@ data = response.json()
 
 # Retrieve a list of all questions
 question_data = data["results"]
-print(question_data)
+# print(question_data)
 
 # Parse all necessary info from 0th index question.
-question = data["results"][0]["question"]
-print(question)
-correct_answer = data["results"][0]["correct_answer"]
-print(correct_answer)
-incorrect_answers = data["results"][0]["incorrect_answers"]
-print(incorrect_answers)
+# question = data["results"][0]["question"]
+# print(question)
+# correct_answer = data["results"][0]["correct_answer"]
+# print(correct_answer)
+# incorrect_answers = data["results"][0]["incorrect_answers"]
+# print(incorrect_answers)
+
+
+#TODO: Video 305: Unescaping HTML entities
 
 
 

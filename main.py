@@ -1,9 +1,15 @@
 # Brainstorm trivia project
-# https://opentdb.com/api_config.php
-# how to access api
+from data import question_data
+
 
 def main():
-    pass
+    for question in question_data:
+        question_text = question["question"]
+        print(question_text)
+        question_answer = question["correct_answer"]
+        print(question_answer)
+        incorrect_answers = question["incorrect_answers"]
+        print(incorrect_answers)
 
 
 if __name__ == "__main__":
