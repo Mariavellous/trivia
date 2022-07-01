@@ -16,6 +16,7 @@ response.raise_for_status()
 # retrieve the data in json format
 data = response.json()
 
+
 # Retrieve a list of all questions
 question_data = data["results"]
 # print(question_data)
@@ -27,9 +28,6 @@ question_data = data["results"]
 # print(correct_answer)
 # incorrect_answers = data["results"][0]["incorrect_answers"]
 # print(incorrect_answers)
-
-
-#TODO: Video 305: Unescaping HTML entities
 
 
 
