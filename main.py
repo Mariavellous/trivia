@@ -1,7 +1,6 @@
 import html
 from data import question_data
 
-#TODO: Video 305: Unescaping HTML entities
 def main():
     for question in question_data:
         question_q = question["question"]
@@ -13,6 +12,7 @@ def main():
         incorrect_answers = question["incorrect_answers"]
         print(incorrect_answers)
 
+# TODO: Create a database for the question.
 
 if __name__ == "__main__":
     main()
