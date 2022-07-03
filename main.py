@@ -18,6 +18,24 @@ class Player(db.Model):
     email_address = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.String(), db.CheckConstraint('password > 0'), unique=True, nullable=False)
 
+
+class Trivia(db.Modle):
+    id = db.Column(db.Integer, primary_key=True)
+    # foreign key
+    # CONSTRAINT player_id FOREIGN KEY (player_id) REFERENCES players(id)
+    player_id = db.Column(db.Integer, nullable=False)
+    question = db.Column(db.String(30), db.CheckConstraint('question > 0'), nullable=False)
+    correct_answer = db.Column(db.String(30), db.CheckConstraint('correct_answer > 0'), nullable=False)
+    # this needs to be a set
+    # incorret_answer SET() NOT NULL,
+    incorrect_answers = db.Column(db.String(30), db.CheckConstraint('correct_answer > 0'), nullable=False)
+    player_answer = db.Column(db.String(30), db.CheckConstraint('player_answer > 0'), nullable=False)
+    # timestamp
+    # played_on = db.Column(, nullable=False
+    # boolean
+    result = db.Column()
+    # result BOOLEAN DEFAULT NULL,
+
 def main():
     for question in question_data:
         question_q = question["question"]
