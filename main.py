@@ -29,7 +29,7 @@ def main():
         incorrect_answers = question["incorrect_answers"]
         print(incorrect_answers)
 
-# TODO: Create a database for the question.
+# TODO: Create a database for the question. What other tables do I need? 
 
 
 if __name__ == "__main__":
