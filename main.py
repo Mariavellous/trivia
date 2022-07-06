@@ -19,16 +19,19 @@ class Player(db.Model):
     password = db.Column(db.String(), db.CheckConstraint('password > 0'), unique=True, nullable=False)
 
 
-class Trivia(db.Modle):
+class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.String(200), db.CheckConstraint('text > 0'), nullable=False)
+    correct_answer = db.Column(db.String(100), db.CheckConstraint('correct_answer > 0'), nullable=False)
+    # this is a string of data object
+    choices = db.Column(db.String(100), db.CheckConstraint('choices > 0'), nullable=False)
+
+
+#### Sample
+class Guess(db.Model):
     # foreign key
     # CONSTRAINT player_id FOREIGN KEY (player_id) REFERENCES players(id)
-    player_id = db.Column(db.Integer, nullable=False)
     question = db.Column(db.String(30), db.CheckConstraint('question > 0'), nullable=False)
-    correct_answer = db.Column(db.String(30), db.CheckConstraint('correct_answer > 0'), nullable=False)
-    # this needs to be a set
-    # incorret_answer SET() NOT NULL,
-    incorrect_answers = db.Column(db.String(30), db.CheckConstraint('correct_answer > 0'), nullable=False)
     player_answer = db.Column(db.String(30), db.CheckConstraint('player_answer > 0'), nullable=False)
     # timestamp
     # played_on = db.Column(, nullable=False

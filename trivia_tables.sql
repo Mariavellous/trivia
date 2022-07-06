@@ -7,15 +7,21 @@ CREATE TABLE IF NOT EXISTS players(
     password VARCHAR NOT NULL CHECK(length(password) > 6)
 );
 
-CREATE TABLE IF NOT EXISTS trivia(
+CREATE TABLE IF NOT EXISTS question(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
+    text VARCHAR(200) NOT NULL (length(question) > 0),
+    choices VARCHAR(200) NOT NULL (length (player_answer) > 0),
+    correct_answer VARCHAR(100) NOT NULL (length (question) > 0),
+
+);
+
     player_id INTEGER NOT NULL,
-    question VARCHAR(30) NOT NULL (length(question) > 0),
-    correct_answer VARCHAR(30) NOT NULL (length (question) > 0),
-    incorret_answer SET() NOT NULL,
-    player_answer VARCHAR(30) NOT NULL (length (player_answer) > 0),
+    player_answer VARCHAR(100) NOT NULL (length (player_answer) > 0),
     played_on timestamp,
     result BOOLEAN DEFAULT NULL,
     CONSTRAINT player_id FOREIGN KEY (player_id) REFERENCES players(id)
-);
+
+
+class Question(db.Model):
+    choices = db.Column(db.String(100), db.CheckConstraint('choices > 0'), nullable=False)
 
