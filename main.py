@@ -7,8 +7,11 @@ from sqlalchemy import CheckConstraint
 app = Flask(__name__)
 # create database in sqlite for now
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///trivia-collection.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config["SQLALCHEMY_ECHO"] = True
 
 db = SQLAlchemy(app)
+
 
 class Player(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -32,9 +35,12 @@ class Guess(db.Model):
     player_id = db.Column(db.Integer, db.ForeignKey(Player.id), nullable=False)
     question_id = db.Column(db.Integer, db.ForeignKey(Question.id), nullable=False)
     player_answer = db.Column(db.String(100), db.CheckConstraint('player_answer > 0'), nullable=False)
-    played_on = db.Column(db.Datetime)
+    played_on = db.Column(db.Date)
     result = db.Column(db.Boolean, nullable=False)
 
+
+db.create_all()
+db.session.commit()
 
 def main():
     for question in question_data:
@@ -47,7 +53,7 @@ def main():
         incorrect_answers = question["incorrect_answers"]
         print(incorrect_answers)
 
-# TODO: Create a database for the question. What other tables do I need? 
+# TODO: Connect to heroku.
 
 
 if __name__ == "__main__":
