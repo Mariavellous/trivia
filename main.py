@@ -27,17 +27,14 @@ class Question(db.Model):
     choices = db.Column(db.String(100), db.CheckConstraint('choices > 0'), nullable=False)
 
 
-#### Sample
 class Guess(db.Model):
-    # foreign key
-    # CONSTRAINT player_id FOREIGN KEY (player_id) REFERENCES players(id)
-    question = db.Column(db.String(30), db.CheckConstraint('question > 0'), nullable=False)
-    player_answer = db.Column(db.String(30), db.CheckConstraint('player_answer > 0'), nullable=False)
-    # timestamp
-    # played_on = db.Column(, nullable=False
-    # boolean
-    result = db.Column()
-    # result BOOLEAN DEFAULT NULL,
+    id = db.Column(db.Integer, primary_key=True)
+    player_id = db.Column(db.Integer, db.ForeignKey(Player.id), nullable=False)
+    question_id = db.Column(db.Integer, db.ForeignKey(Question.id), nullable=False)
+    player_answer = db.Column(db.String(100), db.CheckConstraint('player_answer > 0'), nullable=False)
+    played_on = db.Column(db.Datetime)
+    result = db.Column(db.Boolean, nullable=False)
+
 
 def main():
     for question in question_data:
