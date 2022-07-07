@@ -42,6 +42,10 @@ class Guess(db.Model):
 db.create_all()
 db.session.commit()
 
+# TODO: what are my REST API request.
+# TODO: Make a get request to access trivia question for trivia API
+
+
 def main():
     for question in question_data:
         question_q = question["question"]
