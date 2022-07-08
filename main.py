@@ -1,6 +1,6 @@
 import html
 from data import question_data
-from flask import Flask
+from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import CheckConstraint
 
@@ -56,6 +56,12 @@ def main():
         print(question_answer)
         incorrect_answers = question["incorrect_answers"]
         print(incorrect_answers)
+
+
+# Render the main template
+@app.route('/')
+def home():
+    return render_template('index.html')
 
 # TODO: Connect to heroku.
 
