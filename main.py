@@ -1,8 +1,11 @@
 import html
+
+import data
 from data import question_data
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import CheckConstraint
+from data import *
 
 app = Flask(__name__)
 # create database in sqlite for now
@@ -57,6 +60,11 @@ def main():
         incorrect_answers = question["incorrect_answers"]
         print(incorrect_answers)
 
+def get_trivia_question:
+    data.question_data()
+
+
+
 
 # Render the main template
 @app.route('/')
@@ -65,6 +73,7 @@ def home():
 
 def show_trivia('/trivia', methods=['GET']):
     pass
+
 
 # TODO: Connect to heroku.
 
