@@ -63,6 +63,9 @@ def main():
 def home():
     return render_template('index.html')
 
+def show_trivia('/trivia', methods=['GET']):
+    pass
+
 # TODO: Connect to heroku.
 
 
