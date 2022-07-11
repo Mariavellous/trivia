@@ -1,5 +1,5 @@
 import html
-from data import get_trivia, question_data
+from data import get_trivia
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 import json
@@ -59,17 +59,8 @@ db.session.commit()
 
 
 def main():
-    # for question in question_data:
-    #     question_q = question["question"]
-    #     # decode the HTML characters to its original character representation
-    #     question_text = html.unescape(question_q)
-    #     print(question_text)
-    #     question_answer = question["correct_answer"]
-    #     print(question_answer)
-    #     incorrect_answers = question["incorrect_answers"]
-    #     print(incorrect_answers)
+    get_trivia()
 
-    print(question_data)
 
 
 

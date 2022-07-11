@@ -4,26 +4,27 @@ import html
 import random
 
 
-parameters = {
-    "amount": 1,
-    # Category is Entertainment: Film
-    "category": 11,
-    "type": "multiple",
-}
+def fetch_trivia():
+    parameters = {
+        "amount": 1,
+        # Category is Entertainment: Film
+        "category": 11,
+        "type": "multiple",
+    }
 
-# make a get request to API endpoint including parameters
-response = requests.get("https://opentdb.com/api.php", params=parameters)
-# check any error status
-response.raise_for_status()
-# retrieve the data in json format
-data = response.json()
+    # make a get request to API endpoint including parameters
+    response = requests.get("https://opentdb.com/api.php", params=parameters)
+    # check any error status
+    response.raise_for_status()
+    # retrieve the data in json format
+    data = response.json()
 
-
-# Retrieve a list of all questions
-question_data = data["results"][0]
-# print(question_data)
+    # Retrieve a list of all questions
+    question_data = data["results"][0]
+    return question_data
 
 def get_trivia():
+    question_data = fetch_trivia()
     question_text = question_data["question"]
     question = html.unescape(question_text)
     answer = question_data["correct_answer"]
