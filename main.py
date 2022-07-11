@@ -61,7 +61,9 @@ def main():
         print(incorrect_answers)
 
 def get_trivia_question:
-    data.question_data()
+    question = data.question_data()
+    return question
+
 
 
 
