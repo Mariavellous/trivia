@@ -1,5 +1,5 @@
 import html
-from data import get_trivia
+from TriviaQuestion import TriviaQuestion
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 import json
@@ -45,21 +45,19 @@ db.session.commit()
 
 # TODO: what are my REST API request.
 
-(question, correct_answer, choices) = get_trivia()
-new_trivia = Question(text=question, correct_answer=correct_answer,
-                      choices=json.dumps(choices))
-db.session.add(new_trivia)
-db.session.commit()
+# (question, correct_answer, choices) = get_trivia_info()
+# new_trivia = Question(text=question, correct_answer=correct_answer,
+#                       choices=json.dumps(choices))
+# db.session.add(new_trivia)
+# db.session.commit()
 
-
-# (question, correct_answer, choices) = trivia
-# print(question)
-# print(correct_answer)
-# print(choices)
 
 
 def main():
-    get_trivia()
+    trivia = TriviaQuestion()
+    print(trivia.question)
+    print(trivia.correct_answer)
+    print(trivia.choices)
 
 
 
