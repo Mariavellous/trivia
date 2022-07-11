@@ -1,5 +1,5 @@
 import html
-from data import question_data
+from data import question_data, trivia
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import CheckConstraint
@@ -48,6 +48,8 @@ new_trivia = Question(text=question_data["question"], correct_answer=question_da
                       choices="3")
 db.session.add(new_trivia)
 db.session.commit()
+
+print(trivia)
 
 
 def main():
