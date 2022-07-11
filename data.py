@@ -24,8 +24,10 @@ question_data = data["results"][0]
 # print(question_data)
 
 def get_trivia():
-    question = question_data["question"]
-    correct_answer = question_data["correct_answer"]
+    question_text = question_data["question"]
+    question = html.unescape(question_text)
+    answer = question_data["correct_answer"]
+    correct_answer = html.unescape(answer)
     choices = question_data["incorrect_answers"]
     # Randomnly add the correct answer to the list of incorrect answers to create list of choices
     integer = random.randint(0, 3)
