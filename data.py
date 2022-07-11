@@ -23,7 +23,7 @@ data = response.json()
 question_data = data["results"][0]
 # print(question_data)
 
-def get_trivia(question_data):
+def get_trivia():
     question = question_data["question"]
     correct_answer = question_data["correct_answer"]
     choices = question_data["incorrect_answers"]
@@ -31,9 +31,6 @@ def get_trivia(question_data):
     integer = random.randint(0, 3)
     choices.insert(integer, correct_answer)
     return question, correct_answer, choices
-
-trivia = get_trivia(question_data)
-print(trivia)
 
 
 # Parse all necessary info

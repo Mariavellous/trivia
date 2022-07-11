@@ -1,7 +1,8 @@
 import html
-from data import question_data, trivia
+from data import get_trivia, question_data
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
+import json
 from sqlalchemy import CheckConstraint
 
 app = Flask(__name__)
@@ -44,12 +45,17 @@ db.session.commit()
 
 # TODO: what are my REST API request.
 
-new_trivia = Question(text=question_data["question"], correct_answer=question_data["correct_answer"],
-                      choices="3")
+(question, correct_answer, choices) = get_trivia()
+new_trivia = Question(text=question, correct_answer=correct_answer,
+                      choices=json.dumps(choices))
 db.session.add(new_trivia)
 db.session.commit()
 
-print(trivia)
+
+# (question, correct_answer, choices) = trivia
+# print(question)
+# print(correct_answer)
+# print(choices)
 
 
 def main():
