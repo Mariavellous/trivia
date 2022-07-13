@@ -45,19 +45,17 @@ db.session.commit()
 
 # TODO: what are my REST API request.
 
-# (question, correct_answer, choices) = get_trivia_info()
-# new_trivia = Question(text=question, correct_answer=correct_answer,
-#                       choices=json.dumps(choices))
-# db.session.add(new_trivia)
-# db.session.commit()
-
+# Responsible for add trivia question to the database
+def add_trivia():
+    trivia = TriviaQuestion()
+    new_trivia = Question(text=trivia.question, correct_answer=trivia.correct_answer,
+                          choices=json.dumps(trivia.choices))
+    db.session.add(new_trivia)
+    db.session.commit()
 
 
 def main():
-    trivia = TriviaQuestion()
-    print(trivia.question)
-    print(trivia.correct_answer)
-    print(trivia.choices)
+    add_trivia()
 
 
 
@@ -74,8 +72,6 @@ def main():
     #                       choices=question_data["incorrect_answer"])
     # db.session.add(new_trivia)
     # db.session.commit()
-
-
 
 
 
