@@ -43,9 +43,8 @@ class Guess(db.Model):
 db.create_all()
 db.session.commit()
 
-# TODO: what are my REST API request.
 
-# Responsible for add trivia question to the database
+# Responsible for adding trivia question to the database
 def add_trivia():
     trivia = TriviaQuestion()
     new_trivia = Question(text=trivia.question, correct_answer=trivia.correct_answer,
@@ -73,6 +72,16 @@ def main():
     # db.session.add(new_trivia)
     # db.session.commit()
 
+# RESTFUL API routes
+# /logout
+# /login
+# /register
+# /about
+# (/) def get_all_trivia (past trivia's)
+# /trivia
+# /trivia/<int:id>
+# /trivia/<int:id>/player_answer
+# /trivia/<int:id>/correct_answer
 
 
 # TODO: Connect to heroku.
