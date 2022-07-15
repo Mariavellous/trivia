@@ -64,6 +64,11 @@ def main():
 # def home():
 #     return render_template('index.html')
 
+# Player will login successfully if check_password_hash = true
+@app.route('/login', methods=['POST'])
+def login():
+    pass
+
 # def show_trivia('/trivia', methods=['POST']):
     # Fetch the question/answer from API.
     # Update the QUESTION TABLE
