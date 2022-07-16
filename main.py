@@ -1,9 +1,10 @@
 import html
 from TriviaQuestion import TriviaQuestion
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 import json
 from sqlalchemy import CheckConstraint
+
 
 app = Flask(__name__)
 # create database in sqlite for now
@@ -67,7 +68,10 @@ def main():
 # Player will login successfully if check_password_hash = true
 @app.route('/login', methods=['POST'])
 def login():
-    pass
+    # retrieves data from user input
+    player = request.json
+    email_address = player["email_address"]
+    password = player["password"]
 
 # def show_trivia('/trivia', methods=['POST']):
     # Fetch the question/answer from API.
