@@ -15,6 +15,8 @@ app.config["SQLALCHEMY_ECHO"] = True
 db = SQLAlchemy(app)
 
 
+
+
 class Player(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(30), db.CheckConstraint('first_name > 0'), nullable=False)
@@ -65,13 +67,19 @@ def main():
 # def home():
 #     return render_template('index.html')
 
+@app.route('/')
+def hello_melanie():
+    return 'Hello, Melanie!'
+
 # Player will login successfully if check_password_hash = true
 @app.route('/login', methods=['POST'])
 def login():
-    # retrieves data from user input
+    #retrieves data from user input
     player = request.json
     email_address = player["email_address"]
     password = player["password"]
+
+
 
 # def show_trivia('/trivia', methods=['POST']):
     # Fetch the question/answer from API.
@@ -93,7 +101,7 @@ def login():
 # /trivia/<int:id>/correct_answer
 
 
-# TODO: Connect to heroku.
+# TODO: Connect to heroku # 70
 
 
 if __name__ == "__main__":
