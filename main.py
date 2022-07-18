@@ -71,6 +71,11 @@ def main():
 def hello_melanie():
     return 'Hello, Melanie!'
 
+
+@app.route('/register')
+def register_player():
+    return 'You are successfully registered!'
+
 # Player will login successfully if check_password_hash = true
 @app.route('/login', methods=['POST'])
 def login():
