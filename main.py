@@ -74,6 +74,8 @@ def hello_melanie():
 
 @app.route('/register')
 def register_player():
+    # retrieves data from user_input
+    new_player = request.json
     return 'You are successfully registered!'
 
 # Player will login successfully if check_password_hash = true
