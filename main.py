@@ -76,6 +76,8 @@ def hello_melanie():
 def register_player():
     # retrieves data from user_input
     new_player = request.json
+    # Generate a hash of the password
+    password = generate_password_hash(password=new_player['password'], method='pbkdf2:sha256', salt_length=8)
     return 'You are successfully registered!'
 
 # Player will login successfully if check_password_hash = true
