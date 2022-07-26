@@ -82,6 +82,7 @@ def register_player():
                      email_address=new_player['email_address'],
                      password=password)
     db.session.add(player)
+    db.session.commit()
     return 'You are successfully registered!'
 
 # Player will login successfully if check_password_hash = true
