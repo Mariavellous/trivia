@@ -1,12 +1,18 @@
 import html
 from TriviaQuestion import TriviaQuestion
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 import json
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField
+
 from sqlalchemy import CheckConstraint
 
 
 app = Flask(__name__)
+app.secret_key = 'a random string'
+
 # create database in sqlite for now
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///trivia-collection.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -62,7 +68,7 @@ def main():
 
 
 
-# Render the main template
+# Render the main templates
 # @app.route('/')
 # def home():
 #     return render_template('index.html')
@@ -71,27 +77,49 @@ def main():
 def hello_melanie():
     return 'Hello, Melanie!'
 
+# Register and Login Users
 
-@app.route('/register')
+
+# Register new users
+@app.route('/register', methods=["GET", "POST"])
 def register_player():
-    # retrieves data from user_input
-    new_player = request.json
-    # Generate a hash of the password
-    password = generate_password_hash(password=new_player['password'], method='pbkdf2:sha256', salt_length=8)
-    player = Player(first_name=new_player['first_name'], last_name=new_player['last_name'],
-                     email_address=new_player['email_address'],
-                     password=password)
-    db.session.add(player)
-    db.session.commit()
-    return 'You are successfully registered!'
+    if request.method == "GET":
+        return render_template('register.html')
+    else:
+        # TODO: Need to retrieve data from user input using form
+        # retrieves data from user_input
+        new_player = request.json
+        # Generate a hash of the password
+        password = generate_password_hash(password=new_player['password'], method='pbkdf2:sha256', salt_length=8)
+        player = Player(first_name=new_player['first_name'], last_name=new_player['last_name'],
+                         email_address=new_player['email_address'],
+                         password=password)
+        db.session.add(player)
+        db.session.commit()
+        return redirect(url_for("login"))
+
+# Create WTForms for Login
+class LoginForm(FlaskForm):
+    email = StringField("Email")
+    password = StringField("Password")
+    login = SubmitField("Login")
+
+
+
+
 
 # Player will login successfully if check_password_hash = true
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=["GET", "POST"])
 def login():
-    #retrieves data from user input
-    player = request.json
-    email_address = player["email_address"]
-    password = player["password"]
+    # if request.method == "GET":
+    login_form = LoginForm()
+    return render_template("login.html", form=login_form)
+    # else:
+    #     # TODO: Need to retrieve data from user input using form
+    #     #retrieves data from user input
+    #     player = request.json
+    #     email_address = player["email_address"]
+    #     password = player["password"]
 
 
 
@@ -119,7 +147,7 @@ def login():
 
 
 if __name__ == "__main__":
-    main()
+    app.run(host='0.0.0.0', port=5008)
 
 
 
