@@ -104,6 +104,14 @@ class LoginForm(FlaskForm):
     password = StringField("Password")
     login = SubmitField("Login")
 
+# Create WTForms for Register
+class RegisterForm(FlaskForm):
+    first_name = StringField("First Name")
+    last_name = StringField("Last Name")
+    email = StringField("Email")
+    password = StringField("Password")
+    register = SubmitField("Register")
+
 
 
 
