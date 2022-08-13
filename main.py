@@ -86,22 +86,27 @@ def hello_melanie():
 # Register new users
 @app.route('/register', methods=["GET", "POST"])
 def register_player():
-    # if request.method == "GET":
-    register_form = RegisterForm()
-    return render_template("register.html", form=register_form)
+    if request.method == "GET":
+        register_form = RegisterForm()
+        return render_template("register.html", form=register_form)
 
-    # else:
-    #     # TODO: Need to retrieve data from user input using form
-    #     # retrieves data from user_input
+
+    else:
+        # retrieves data from user_input
     #     new_player = request.json
-    #     # Generate a hash of the password
-    #     password = generate_password_hash(password=new_player['password'], method='pbkdf2:sha256', salt_length=8)
+        new_player = Player()
+        new_player.first_name = request.form.get("first_name")
+        new_player.last_name = request.form.get("last_name")
+        new_player.email_address = request.form.get("email")
+        password = request.form.get("password")
+        # Generate a hash of the password
+        new_player.password = generate_password_hash(password=password, method='pbkdf2:sha256', salt_length=8)
     #     player = Player(first_name=new_player['first_name'], last_name=new_player['last_name'],
     #                      email_address=new_player['email_address'],
     #                      password=password)
-    #     db.session.add(player)
-    #     db.session.commit()
-    #     return redirect(url_for("login"))
+        db.session.add(new_player)
+        db.session.commit()
+        return redirect(url_for("login_player"))
 
 # Create WTForms for Login
 class LoginForm(FlaskForm):
@@ -122,9 +127,9 @@ class RegisterForm(FlaskForm):
 # Player will login successfully if check_password_hash = true
 @app.route('/login', methods=["GET", "POST"])
 def login_player():
-    # if request.method == "GET":
-    login_form = LoginForm()
-    return render_template("login.html", form=login_form)
+    if request.method == "GET":
+        login_form = LoginForm()
+        return render_template("login.html", form=login_form)
     # else:
     #     # TODO: Need to retrieve data from user input using form
     #     #retrieves data from user input
@@ -132,6 +137,8 @@ def login_player():
     #     email_address = player["email_address"]
     #     password = player["password"]
 
+# TODO: Add user to database.
+# TODO: Succesfully login a user.
 
 
 # def show_trivia('/trivia', methods=['POST']):
@@ -152,9 +159,6 @@ def login_player():
 # /trivia/<int:id>
 # /trivia/<int:id>/player_answer
 # /trivia/<int:id>/correct_answer
-
-
-# TODO: Connect to heroku # 70
 
 
 if __name__ == "__main__":
