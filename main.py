@@ -1,4 +1,6 @@
 import html
+
+
 from TriviaQuestion import TriviaQuestion
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
@@ -6,6 +8,7 @@ import json
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
+from wtforms.validators import DataRequired
 
 from sqlalchemy import CheckConstraint
 
@@ -83,21 +86,22 @@ def hello_melanie():
 # Register new users
 @app.route('/register', methods=["GET", "POST"])
 def register_player():
-    if request.method == "GET":
-        register_form = RegisterForm()
-        return render_template("register.html", form=register_form)
-    else:
-        # TODO: Need to retrieve data from user input using form
-        # retrieves data from user_input
-        new_player = request.json
-        # Generate a hash of the password
-        password = generate_password_hash(password=new_player['password'], method='pbkdf2:sha256', salt_length=8)
-        player = Player(first_name=new_player['first_name'], last_name=new_player['last_name'],
-                         email_address=new_player['email_address'],
-                         password=password)
-        db.session.add(player)
-        db.session.commit()
-        return redirect(url_for("login"))
+    # if request.method == "GET":
+    register_form = RegisterForm()
+    return render_template("register.html", form=register_form)
+
+    # else:
+    #     # TODO: Need to retrieve data from user input using form
+    #     # retrieves data from user_input
+    #     new_player = request.json
+    #     # Generate a hash of the password
+    #     password = generate_password_hash(password=new_player['password'], method='pbkdf2:sha256', salt_length=8)
+    #     player = Player(first_name=new_player['first_name'], last_name=new_player['last_name'],
+    #                      email_address=new_player['email_address'],
+    #                      password=password)
+    #     db.session.add(player)
+    #     db.session.commit()
+    #     return redirect(url_for("login"))
 
 # Create WTForms for Login
 class LoginForm(FlaskForm):
@@ -107,17 +111,17 @@ class LoginForm(FlaskForm):
 
 # Create WTForms for Register
 class RegisterForm(FlaskForm):
-    first_name = StringField("First Name")
-    last_name = StringField("Last Name")
-    email = StringField("Email")
-    password = StringField("Password")
-    register = SubmitField("Register")
+    first_name = StringField("First Name", validators=[DataRequired()])
+    last_name = StringField("Last Name", validators=[DataRequired()])
+    email = StringField("Email", validators=[DataRequired()])
+    password = StringField("Password", validators=[DataRequired()])
+    register = SubmitField("Register", validators=[DataRequired()])
 
 
 
 # Player will login successfully if check_password_hash = true
 @app.route('/login', methods=["GET", "POST"])
-def login():
+def login_player():
     # if request.method == "GET":
     login_form = LoginForm()
     return render_template("login.html", form=login_form)
