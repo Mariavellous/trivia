@@ -84,7 +84,8 @@ def hello_melanie():
 @app.route('/register', methods=["GET", "POST"])
 def register_player():
     if request.method == "GET":
-        return render_template('register.html')
+        register_form = RegisterForm()
+        return render_template("register.html", form=register_form)
     else:
         # TODO: Need to retrieve data from user input using form
         # retrieves data from user_input
@@ -111,8 +112,6 @@ class RegisterForm(FlaskForm):
     email = StringField("Email")
     password = StringField("Password")
     register = SubmitField("Register")
-
-
 
 
 
