@@ -7,11 +7,11 @@ from flask_sqlalchemy import SQLAlchemy
 import json
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, EmailField
+from wtforms import StringField, SubmitField, PasswordField, EmailField, RadioField
 from wtforms.validators import DataRequired
 from flask_login import UserMixin, LoginManager, login_user
 import jinja2
-
+import json
 
 from sqlalchemy import CheckConstraint
 
@@ -69,6 +69,8 @@ def add_trivia():
     db.session.add(new_trivia)
     db.session.commit()
 
+    return new_trivia.id
+
 
 def main():
     add_trivia()
@@ -85,9 +87,40 @@ def main():
 def hello_melanie():
     return 'Hello, Melanie!'
 
+
+# Create WTForms for Trivia Question
+class TriviaForm(FlaskForm):
+    choices = RadioField("Choice", choices=[("A", "A"), ("B", "B"), ("C", "C"), ("D", "D")], validators=[DataRequired()])
+    # choices = RadioField("Choice", choices=[("A", "B", "C", "D")], validators=[DataRequired()])
+
+    submit = SubmitField("Register", validators=[DataRequired()])
+
+# responsible for showing the question to user
+@app.route('/question', methods=["GET", "POST"])
+def show_question():
+    if request.method == "GET":
+        trivia_form = TriviaForm()
+        # get the question for the day
+        trivia_id = add_trivia()
+        trivia = Question.query.get(trivia_id)
+        print(trivia)
+        question = trivia.text
+        options = json.loads(trivia.choices)
+        trivia_form.choices.choices[0] = options[0]
+        trivia_form.choices.choices[1] = options[1]
+        trivia_form.choices.choices[2] = options[2]
+        trivia_form.choices.choices[3] = options[3]
+        return render_template("trivia.html", form=trivia_form, question=question, options=options)
+
+
+
+
+
+
+
+
+
 # Register and Login Users
-
-
 # Register new users
 @app.route('/register', methods=["GET", "POST"])
 def register_player():
@@ -149,13 +182,13 @@ def login_player():
             return render_template("login.html", error=error)
         elif check_password_hash(player.password, password):
             login_user(player)
-            return redirect(url_for("hello_melanie"))
+            return redirect(url_for("show_question"))
         else:
             error = "Incorrect password. Please try again."
             return render_template("login.html", error=error)
 
 
-# TODO:
+# TODO: get "error user login" to worK: jinja issue
 
 # TODO: Create a route where trivia question will pop up
 

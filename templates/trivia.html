@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Trivia of the Day</title>
+	</head>
+	<body>
+		<div class="container">
+			<h1>🍿 Movie Trivia of the Day 🍿</h1>
+			<h5> {{ question }} </h5>
+			<h5> {{ choices }}</h5>
+			<form method="POST" action="{{ url_for('show_question') }}">
+				{{ form.csrf_token }}
+        {{ form.choices.choices.label }} {{ form.choices(size=10) }}
+		<input type="submit" value="Submit">
+			</form>
+		</div>
+	</body>
+</html>
