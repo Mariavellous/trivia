@@ -7,8 +7,11 @@ from flask_sqlalchemy import SQLAlchemy
 import json
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
+from wtforms import StringField, SubmitField, PasswordField, EmailField
 from wtforms.validators import DataRequired
+from flask_login import UserMixin, LoginManager, login_user
+import jinja2
+
 
 from sqlalchemy import CheckConstraint
 
@@ -23,10 +26,12 @@ app.config["SQLALCHEMY_ECHO"] = True
 
 db = SQLAlchemy(app)
 
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 
 
-class Player(db.Model):
+class Player(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(30), db.CheckConstraint('first_name > 0'), nullable=False)
     last_name = db.Column(db.String(30), db.CheckConstraint('last_name > 0'), nullable=False)
@@ -89,8 +94,6 @@ def register_player():
     if request.method == "GET":
         register_form = RegisterForm()
         return render_template("register.html", form=register_form)
-
-
     else:
         # retrieves data from user_input
     #     new_player = request.json
@@ -110,19 +113,23 @@ def register_player():
 
 # Create WTForms for Login
 class LoginForm(FlaskForm):
-    email = StringField("Email")
-    password = StringField("Password")
+    email = EmailField("Email")
+    password = PasswordField("Password")
     login = SubmitField("Login")
 
 # Create WTForms for Register
 class RegisterForm(FlaskForm):
     first_name = StringField("First Name", validators=[DataRequired()])
     last_name = StringField("Last Name", validators=[DataRequired()])
-    email = StringField("Email", validators=[DataRequired()])
-    password = StringField("Password", validators=[DataRequired()])
+    email = EmailField("Email", validators=[DataRequired()])
+    password = PasswordField("Password", validators=[DataRequired()])
     register = SubmitField("Register", validators=[DataRequired()])
 
 
+
+@login_manager.user_loader
+def load_user(user_id):
+    return Player.query.get(user_id)
 
 # Player will login successfully if check_password_hash = true
 @app.route('/login', methods=["GET", "POST"])
@@ -130,15 +137,27 @@ def login_player():
     if request.method == "GET":
         login_form = LoginForm()
         return render_template("login.html", form=login_form)
-    # else:
-    #     # TODO: Need to retrieve data from user input using form
-    #     #retrieves data from user input
-    #     player = request.json
-    #     email_address = player["email_address"]
-    #     password = player["password"]
+    else:
+        error = None
+        # TODO: Need to retrieve data from user input using form
+    #     retrieves data from user input
+        email = request.form.get("email")
+        password = request.form.get("password")
+        player = Player.query.filter(Player.email_address == email).first()
+        if player is None:
+            error = "That email does not exist. Please try again."
+            return render_template("login.html", error=error)
+        elif check_password_hash(player.password, password):
+            login_user(player)
+            return redirect(url_for("hello_melanie"))
+        else:
+            error = "Incorrect password. Please try again."
+            return render_template("login.html", error=error)
 
-# TODO: Add user to database.
-# TODO: Succesfully login a user.
+
+# TODO:
+
+# TODO: Create a route where trivia question will pop up
 
 
 # def show_trivia('/trivia', methods=['POST']):

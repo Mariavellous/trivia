@@ -1,18 +1,21 @@
 <!DOCTYPE HTML>
 
-<html>
-	<head>
-		<title>Login</title>
-	</head>
-	<body>
-		<div class="container">
-			<h1>Login</h1>
-			<form method="POST" action="{{ url_for('login_player') }}">
-				{{ form.csrf_token }}
-				{{ form.email.label }} {{ form.email(size=100) }}
-				{{ form.password.label }} {{ form.password(size=100) }}
-				<input type="submit" value="Log In">
-			</form>
-		</div>
-	</body>
+<html lang="en">
+<head>
+  <title>Login</title>
+</head>
+<body>
+<div class="container">
+  <h1>Login</h1>
+  {% if error %}
+    <p style="color:red; font-size:14px"> {{ error }} </p>
+  {% endif %}
+  <form method="POST" action="{{ url_for('login_player') }}">
+    {{ form.csrf_token }}
+    {{ form.email.label }} {{ form.email(size=100) }}
+    {{ form.password.label }} {{ form.password(size=100) }}
+    <input type="submit" value="Log In">
+  </form>
+</div>
+</body>
 </html>
