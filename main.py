@@ -200,7 +200,7 @@ def login_player():
             return redirect(url_for("get_question"))
         else:
             error = "Incorrect password. Please try again."
-            return render_template("login.html", error=error)
+            return render_template("login.html", error=error, form=login_form)
 
 
 # TODO: get "error user login" to worK: jinja issue
