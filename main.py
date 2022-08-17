@@ -68,12 +68,10 @@ def add_trivia():
                           choices=json.dumps(trivia.choices))
     db.session.add(new_trivia)
     db.session.commit()
-
     return new_trivia.id
 
 
-def main():
-    add_trivia()
+new_trivia_id = add_trivia()
 
 
 
@@ -98,12 +96,12 @@ class TriviaForm(FlaskForm):
 
 # responsible for showing the question to user
 @app.route('/question', methods=["GET"])
-def show_question():
+def show_question(trivia_id=new_trivia_id):
     trivia_form = TriviaForm()
     # get the question for the day
-    trivia_id = add_trivia()
+    # trivia_id = add_trivia()
     trivia = Question.query.get(trivia_id)
-    print(trivia)
+    print(trivia.correct_answer)
     question = trivia.text
     options = json.loads(trivia.choices)
     trivia_form.options.choices[0] = options[0]
@@ -113,12 +111,17 @@ def show_question():
     return render_template("trivia.html", form=trivia_form, question=question)
 
 
+# responsible for retrieving player's answer
 @app.route('/question', methods=["POST"])
-def show_player_answer():
+def show_player_answer(trivia_id=new_trivia_id):
+    trivia = Question.query.get(trivia_id)
     player_answer = request.form.get("options")
     print(player_answer)
-    print("hello")
-    return redirect(url_for("login_player"))
+    if player_answer == trivia.correct_answer:
+        # State Player gets the correct answer
+        # Add popcorn to user's profile
+        print("yes")
+        return redirect(url_for("login_player"))
 
 
 # Register and Login Users
