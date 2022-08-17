@@ -12,13 +12,15 @@ from wtforms.validators import DataRequired
 from flask_login import UserMixin, LoginManager, login_user
 import jinja2
 import json
+from flask_bootstrap import Bootstrap5
+
 
 from sqlalchemy import CheckConstraint
 
 
 app = Flask(__name__)
 app.secret_key = 'a random string'
-
+bootstrap = Bootstrap5(app)
 # create database in sqlite for now
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///trivia-collection.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -89,7 +91,7 @@ def get_question():
 
 @app.route('/')
 def hello_melanie():
-    return 'Hello, Melanie!'
+    return render_template("index.html")
 
 
 # Create WTForms for Trivia Question

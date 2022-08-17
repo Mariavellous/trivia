@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome to the Movie Trivia</title>
+  <p> Are you a movie buff? Let's find out! Grab your popcorn. </p>
+  <button type="button"> Log In</button>
+
+  <button type="button"> Sign Up</button>
+
+  <button type="button"> Log Out</button>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/">Movie Trivia</a>
+  <div class="collapse navbar-collapse">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('get_question') }}">Play</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('login_player') }}">Login</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('register_player') }}">Register</a>
+      </li>
+
+    </ul>
+
+
+  </div>
+</nav>
+</body>
+</html>
