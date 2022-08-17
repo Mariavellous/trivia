@@ -71,8 +71,14 @@ def add_trivia():
     return new_trivia.id
 
 
-new_trivia_id = add_trivia()
+# new_trivia_id = add_trivia()
 
+@app.route('/play')
+def get_question():
+    new_trivia_id = add_trivia()
+    # return new_trivia_id
+    print(new_trivia_id)
+    return redirect(url_for("show_question", trivia_id=new_trivia_id))
 
 
 
@@ -95,8 +101,8 @@ class TriviaForm(FlaskForm):
     submit = SubmitField("Register", validators=[DataRequired()])
 
 # responsible for showing the question to user
-@app.route('/question', methods=["GET"])
-def show_question(trivia_id=new_trivia_id):
+@app.route('/question/<int:trivia_id>', methods=["GET"])
+def show_question(trivia_id):
     trivia_form = TriviaForm()
     # get the question for the day
     # trivia_id = add_trivia()
@@ -108,20 +114,24 @@ def show_question(trivia_id=new_trivia_id):
     trivia_form.options.choices[1] = options[1]
     trivia_form.options.choices[2] = options[2]
     trivia_form.options.choices[3] = options[3]
-    return render_template("trivia.html", form=trivia_form, question=question)
+    return render_template("trivia.html", form=trivia_form, question=question, trivia_id=trivia_id)
 
 
 # responsible for retrieving player's answer
-@app.route('/question', methods=["POST"])
-def show_player_answer(trivia_id=new_trivia_id):
+@app.route('/question/<int:trivia_id>', methods=["POST"])
+def show_player_answer(trivia_id):
     trivia = Question.query.get(trivia_id)
     player_answer = request.form.get("options")
     print(player_answer)
+    error = None
     if player_answer == trivia.correct_answer:
         # State Player gets the correct answer
         # Add popcorn to user's profile
-        print("yes")
-        return redirect(url_for("login_player"))
+        print("Your answer is right.")
+        return redirect(url_for("hello_melanie"))
+    else:
+        error = "Your answer is wrong"
+        return error
 
 
 # Register and Login Users
@@ -186,7 +196,7 @@ def login_player():
             return render_template("login.html", error=error)
         elif check_password_hash(player.password, password):
             login_user(player)
-            return redirect(url_for("show_question"))
+            return redirect(url_for("get_question"))
         else:
             error = "Incorrect password. Please try again."
             return render_template("login.html", error=error)
@@ -194,7 +204,7 @@ def login_player():
 
 # TODO: get "error user login" to worK: jinja issue
 
-# TODO: Create a route where player's answer gets check with the correct_answer
+# TODO: Able to output new trivia question when user press play --> leads to /question
 
 
 # def show_trivia('/trivia', methods=['POST']):
