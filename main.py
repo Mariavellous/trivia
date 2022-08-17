@@ -10,7 +10,6 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, EmailField, RadioField
 from wtforms.validators import DataRequired
 from flask_login import UserMixin, LoginManager, login_user
-import jinja2
 import json
 from flask_bootstrap import Bootstrap5
 
@@ -183,8 +182,8 @@ def load_user(user_id):
 # Player will login successfully if check_password_hash = true
 @app.route('/login', methods=["GET", "POST"])
 def login_player():
+    login_form = LoginForm()
     if request.method == "GET":
-        login_form = LoginForm()
         return render_template("login.html", form=login_form)
     else:
         error = None
@@ -195,7 +194,7 @@ def login_player():
         player = Player.query.filter(Player.email_address == email).first()
         if player is None:
             error = "That email does not exist. Please try again."
-            return render_template("login.html", error=error)
+            return render_template("login.html", form=login_form, error=error)
         elif check_password_hash(player.password, password):
             login_user(player)
             return redirect(url_for("get_question"))
@@ -206,7 +205,7 @@ def login_player():
 
 # TODO: get "error user login" to worK: jinja issue
 
-# TODO: Able to output new trivia question when user press play --> leads to /question
+# TODO: Able to add popcorn points when player answers the question correctly.
 
 
 # def show_trivia('/trivia', methods=['POST']):
