@@ -90,34 +90,35 @@ def hello_melanie():
 
 # Create WTForms for Trivia Question
 class TriviaForm(FlaskForm):
-    choices = RadioField("Choice", choices=[("A", "A"), ("B", "B"), ("C", "C"), ("D", "D")], validators=[DataRequired()])
+
+    options = RadioField("Choice", choices=[("A", "A"), ("B", "B"), ("C", "C"), ("D", "D")], validators=[DataRequired()])
     # choices = RadioField("Choice", choices=[("A", "B", "C", "D")], validators=[DataRequired()])
 
     submit = SubmitField("Register", validators=[DataRequired()])
 
 # responsible for showing the question to user
-@app.route('/question', methods=["GET", "POST"])
+@app.route('/question', methods=["GET"])
 def show_question():
-    if request.method == "GET":
-        trivia_form = TriviaForm()
-        # get the question for the day
-        trivia_id = add_trivia()
-        trivia = Question.query.get(trivia_id)
-        print(trivia)
-        question = trivia.text
-        options = json.loads(trivia.choices)
-        trivia_form.choices.choices[0] = options[0]
-        trivia_form.choices.choices[1] = options[1]
-        trivia_form.choices.choices[2] = options[2]
-        trivia_form.choices.choices[3] = options[3]
-        return render_template("trivia.html", form=trivia_form, question=question, options=options)
+    trivia_form = TriviaForm()
+    # get the question for the day
+    trivia_id = add_trivia()
+    trivia = Question.query.get(trivia_id)
+    print(trivia)
+    question = trivia.text
+    options = json.loads(trivia.choices)
+    trivia_form.options.choices[0] = options[0]
+    trivia_form.options.choices[1] = options[1]
+    trivia_form.options.choices[2] = options[2]
+    trivia_form.options.choices[3] = options[3]
+    return render_template("trivia.html", form=trivia_form, question=question)
 
 
-
-
-
-
-
+@app.route('/question', methods=["POST"])
+def show_player_answer():
+    player_answer = request.form.get("options")
+    print(player_answer)
+    print("hello")
+    return redirect(url_for("login_player"))
 
 
 # Register and Login Users
@@ -190,7 +191,7 @@ def login_player():
 
 # TODO: get "error user login" to worK: jinja issue
 
-# TODO: Create a route where trivia question will pop up
+# TODO: Create a route where player's answer gets check with the correct_answer
 
 
 # def show_trivia('/trivia', methods=['POST']):

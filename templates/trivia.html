@@ -7,11 +7,10 @@
 	<body>
 		<div class="container">
 			<h1>🍿 Movie Trivia of the Day 🍿</h1>
-			<h5> {{ question }} </h5>
-			<h5> {{ choices }}</h5>
+			<h3> {{ question }} </h3>
 			<form method="POST" action="{{ url_for('show_question') }}">
 				{{ form.csrf_token }}
-        {{ form.choices.choices.label }} {{ form.choices(size=10) }}
+        {{ form.options.choices.label }} {{ form.options(size=5) }}
 		<input type="submit" value="Submit">
 			</form>
 		</div>
