@@ -139,12 +139,22 @@ def show_player_answer(trivia_id):
 # Register new users
 @app.route('/register', methods=["GET", "POST"])
 def register_player():
+    register_form = RegisterForm()
+    error = None
     if request.method == "GET":
-        register_form = RegisterForm()
+        # register_form = RegisterForm()
         return render_template("register.html", form=register_form)
     else:
-        # retrieves data from user_input
-    #     new_player = request.json
+        # retrieves data from player's input
+        email = request.form.get("email")
+        # check if email address exist in database
+        player = Player.query.filter(Player.email_address == email).first()
+        # if email already exist, state error
+        if player is not None:
+            error = "That email address already exist."
+            return render_template("register.html", form=register_form, error=error)
+
+        # retrieve and save player's input in the database
         new_player = Player()
         new_player.first_name = request.form.get("first_name")
         new_player.last_name = request.form.get("last_name")
@@ -152,9 +162,6 @@ def register_player():
         password = request.form.get("password")
         # Generate a hash of the password
         new_player.password = generate_password_hash(password=password, method='pbkdf2:sha256', salt_length=8)
-    #     player = Player(first_name=new_player['first_name'], last_name=new_player['last_name'],
-    #                      email_address=new_player['email_address'],
-    #                      password=password)
         db.session.add(new_player)
         db.session.commit()
         return redirect(url_for("login_player"))
@@ -179,7 +186,7 @@ class RegisterForm(FlaskForm):
 def load_user(user_id):
     return Player.query.get(user_id)
 
-# Player will login successfully if check_password_hash = true
+# Player will login successfully if check_password_hash == True
 @app.route('/login', methods=["GET", "POST"])
 def login_player():
     login_form = LoginForm()
@@ -187,8 +194,7 @@ def login_player():
         return render_template("login.html", form=login_form)
     else:
         error = None
-        # TODO: Need to retrieve data from user input using form
-    #     retrieves data from user input
+        # retrieves data from player's input
         email = request.form.get("email")
         password = request.form.get("password")
         player = Player.query.filter(Player.email_address == email).first()
@@ -203,7 +209,7 @@ def login_player():
             return render_template("login.html", error=error, form=login_form)
 
 
-# TODO: get "error user login" to worK: jinja issue
+# TODO: work on NavBar
 
 # TODO: Able to add popcorn points when player answers the question correctly.
 

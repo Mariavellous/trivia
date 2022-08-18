@@ -7,6 +7,9 @@
 	<body>
 		<div class="container">
 			<h1>Sign Up Here</h1>
+			{% if error %}
+    		<p style="color:red; font-size:16px"> {{ error }} </p>
+			{% endif %}
 			<form method="POST" action="{{ url_for('register_player') }}">
 				{{ form.csrf_token }}
         {{ form.first_name.label }} {{ form.first_name(size=100) }}
