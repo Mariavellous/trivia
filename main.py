@@ -218,7 +218,7 @@ def login_player():
 
 # TODO: work on NavBar
 
-# TODO: Able to add popcorn points when player answers the question correctly.
+# TODO: Able to add popcorn points components to database.
 
 # TODO: Get the Play button to work on main page.
 
