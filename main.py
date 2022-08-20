@@ -39,6 +39,7 @@ class Player(db.Model, UserMixin):
     # email_address VARCHAR(50) UNIQUE NOT NULL CHECK(email_address LIKE '%@%.%'),
     email_address = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.String(), db.CheckConstraint('password > 0'), unique=True, nullable=False)
+    # points = db.Column(db.Integer, nullable=True)
 
 
 class Question(db.Model):
@@ -104,6 +105,7 @@ class TriviaForm(FlaskForm):
 # responsible for showing the question to user
 @app.route('/question/<int:trivia_id>', methods=["GET"])
 def show_question(trivia_id):
+    # popcorn = player.points
     trivia_form = TriviaForm()
     # get the question for the day
     # trivia_id = add_trivia()
@@ -111,11 +113,13 @@ def show_question(trivia_id):
     print(trivia.correct_answer)
     question = trivia.text
     options = json.loads(trivia.choices)
+    popcorn = "10 points"
     trivia_form.options.choices[0] = options[0]
     trivia_form.options.choices[1] = options[1]
     trivia_form.options.choices[2] = options[2]
     trivia_form.options.choices[3] = options[3]
-    return render_template("trivia.html", form=trivia_form, question=question, trivia_id=trivia_id)
+    return render_template("trivia.html", form=trivia_form, question=question, trivia_id=trivia_id, popcorn=popcorn)
+
 
 
 # responsible for retrieving player's answer
@@ -125,14 +129,17 @@ def show_player_answer(trivia_id):
     player_answer = request.form.get("options")
     print(player_answer)
     error = None
+    correct_answer = trivia.correct_answer
     if player_answer == trivia.correct_answer:
         # State Player gets the correct answer
         # Add popcorn to user's profile
         print("Your answer is right.")
-        return redirect(url_for("hello_melanie"))
+        # Add popcorn to user's profile
+        popcorn = "Here are your popcorn points"
+        return render_template("result.html", popcorn=popcorn, correct_answer=correct_answer)
     else:
-        error = "Your answer is wrong"
-        return error
+        error = f"Sorry, {player_answer} is wrong."
+        return render_template("result.html", error=error, correct_answer=correct_answer)
 
 
 # Register and Login Users
@@ -212,6 +219,8 @@ def login_player():
 # TODO: work on NavBar
 
 # TODO: Able to add popcorn points when player answers the question correctly.
+
+# TODO: Get the Play button to work on main page.
 
 
 # def show_trivia('/trivia', methods=['POST']):
