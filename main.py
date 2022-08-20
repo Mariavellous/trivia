@@ -222,6 +222,8 @@ def login_player():
 
 # TODO: Get the Play button to work on main page.
 
+# TODO: Add footer.html
+
 
 # def show_trivia('/trivia', methods=['POST']):
     # Fetch the question/answer from API.
