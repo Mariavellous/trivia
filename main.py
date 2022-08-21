@@ -76,6 +76,7 @@ def add_trivia():
 # new_trivia_id = add_trivia()
 
 @app.route('/play')
+@login_required
 def get_question():
     new_trivia_id = add_trivia()
     # return new_trivia_id
@@ -219,7 +220,6 @@ def logout():
     return redirect(url_for("home"))
 
 
-# TODO: work on NavBar -
 
 # TODO: Able to add popcorn points components to database.
 
