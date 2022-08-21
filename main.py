@@ -223,7 +223,6 @@ def logout():
 
 # TODO: Able to add popcorn points components to database.
 
-# TODO: Get the Play button to work on main page.
 
 
 
