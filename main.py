@@ -9,7 +9,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, EmailField, RadioField
 from wtforms.validators import DataRequired
-from flask_login import UserMixin, LoginManager, login_user
+from flask_login import UserMixin, LoginManager, login_user, logout_user, login_required
 import json
 from flask_bootstrap import Bootstrap5
 
@@ -84,14 +84,11 @@ def get_question():
 
 
 
-# Render the main templates
-# @app.route('/')
-# def home():
-#     return render_template('index.html')
-
+# Render the main page template
 @app.route('/')
-def hello_melanie():
-    return render_template("index.html")
+def home():
+    return render_template('index.html')
+
 
 
 # Create WTForms for Trivia Question
@@ -215,14 +212,19 @@ def login_player():
             error = "Incorrect password. Please try again."
             return render_template("login.html", error=error, form=login_form)
 
+# User Logout
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for("home"))
 
-# TODO: work on NavBar
+
+# TODO: work on NavBar -
 
 # TODO: Able to add popcorn points components to database.
 
 # TODO: Get the Play button to work on main page.
 
-# TODO: Add footer.html
 
 
 # def show_trivia('/trivia', methods=['POST']):
@@ -235,8 +237,6 @@ def login_player():
 
 # RESTFUL API routes
 # /logout
-# /login
-# /register
 # /about
 # (/) def get_all_trivia (past trivia's)
 # /trivia
