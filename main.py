@@ -236,7 +236,6 @@ def logout():
     # db.session.commit()
 
 # RESTFUL API routes
-# /logout
 # /about
 # (/) def get_all_trivia (past trivia's)
 # /trivia
