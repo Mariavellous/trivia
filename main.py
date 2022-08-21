@@ -223,6 +223,9 @@ def logout():
 
 # TODO: Able to add popcorn points components to database.
 
+# TODO: Increase the # of characters on question text on database"
+
+
 
 
 
@@ -241,6 +244,7 @@ def logout():
 # /trivia/<int:id>
 # /trivia/<int:id>/player_answer
 # /trivia/<int:id>/correct_answer
+
 
 
 if __name__ == "__main__":
