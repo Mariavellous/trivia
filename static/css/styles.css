@@ -4,31 +4,62 @@ body {
     margin: 0;
     text-align: center;
     font-size: 2rem;
+    border: 20px;
+    display: block
 
 }
 
-
-
-a:link {
-  color: blue;
-  background-color: transparent;
-  text-decoration: none;
+/* Navigation Menu */
+.navbar {
+  padding-left: 50px;
+  padding-right: 50px
 }
-a:visited {
-  color: black;
-  background-color: transparent;
-  text-decoration: none;
+
+.navbar-brand {
+  flex-grow: 1;
+  text-align: left;
+  font-size: 3rem;
+  color: whitesmoke;
+  font-family: "Montserrat", sans-serif;
+
 }
-a:hover {
-  color: navy;
+
+#navbarResponsive {
+  flex-grow: 0;
+}
+
+/*.nav-link:link {*/
+/*  color: white;*/
+/*  background-color: transparent;*/
+/*  text-decoration: none*/
+/*}*/
+
+.nav-link:hover {
+  color: whitesmoke;
   background-color: transparent;
   text-decoration: underline;
+
 }
-a:active {
-  color: green;
-  background-color: transparent;
-  text-decoration: underline;
-}
+
+
+/*a:link {*/
+/*  color: blue;*/
+/*  background-color: transparent;*/
+/*  text-decoration: none;*/
+/*}*/
+
+/*a:hover {*/
+/*  color: navy;*/
+/*  background-color: transparent;*/
+/*  text-decoration: underline;*/
+/*}*/
+
+
+/*a:active {*/
+/*  color: green;*/
+/*  background-color: transparent;*/
+/*  text-decoration: underline;*/
+/*}*/
 
 
 /*Share Button Plugins to other Social Media*/
