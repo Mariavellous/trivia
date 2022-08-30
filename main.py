@@ -233,6 +233,8 @@ def logout():
 
 # TODO: Make form responsive
 
+# TODO: Load CSS on all template using jinja
+
 
 
 
