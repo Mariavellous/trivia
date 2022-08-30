@@ -1,22 +1,28 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
+
 <html lang="en">
 {% include "header.html" %}
 
 <body>
-<div class="main-body">
-{% if error %}
-    		<p style="color:red; font-size:16px"> {{ error }} </p>
-  <p> The correct answer is: {{ correct_answer }}</p>
-
-{% else %}
-<p> {{correct_answer}} is correct! </p>
-{% endif %}
 
 
-<p> Popcorn Points: 100 </p>
-<p> Thank you for playing! </p>
+<div class="container main-body">
 
-{% include "footer.html" %}
- </div>
+  {% if error %}
+  <p style="color:red; font-size:16px"> {{ error }} </p>
+  <h3 class="answer"> The correct answer is: {{ correct_answer }}</h3>
+
+  {% else %}
+  <h3> {{correct_answer}} is correct! </h3>
+  {% endif %}
+
+
+  <p> Popcorn Points: 100 </p>
+  <p> Thank you for playing! </p>
+
+
+</div>
+  {% include "footer.html" %}
+
 </body>
 </html>

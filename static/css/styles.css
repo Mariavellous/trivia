@@ -1,5 +1,9 @@
 
-/* Navigation Menu */
+.main-body h1{
+  margin-top: 5rem;
+}
+
+  /* Navigation Menu */
 .navbar {
   padding-left: 50px;
   padding-right: 50px

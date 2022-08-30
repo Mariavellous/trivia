@@ -7,21 +7,22 @@
 <div class="container main-body">
   <h1>Login</h1>
   {% if error %}
-    <p style="color:red; font-size:14px"> {{ error }} </p>
+  <p style="color:red; font-size:14px"> {{ error }} </p>
   {% endif %}
   <div class="forms">
 
-  <form class="form-group" method="POST" action="{{ url_for('login_player') }}">
-    {{ form.csrf_token }}
-    {{ form.email.label }} {{ form.email(size=100) }}
-    {{ form.password.label }} {{ form.password(size=100) }}
-    <input type="submit" value="Log In">
-  </form>
+    <form class="form-group" method="POST" action="{{ url_for('login_player') }}">
+      {{ form.csrf_token }}
+      {{ form.email.label }} {{ form.email(size=100) }}
+      {{ form.password.label }} {{ form.password(size=100) }}
+      <input type="submit" value="Log In">
+    </form>
 
-</div>
-<a style="color:blue; font-size:20px; text-decoration: underline;" class="nav-link" href="/register">I still need to register.</a>
+  </div>
+  <a style="color:blue; font-size:20px; text-decoration: underline;" class="nav-link" href="/register">I still need to
+    register.</a>
 
-{% include "footer.html" %}
+  {% include "footer.html" %}
 
 </body>
 </html>

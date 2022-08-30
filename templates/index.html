@@ -4,25 +4,24 @@
 
 <body>
 
-<div class="main-body">
-<p> Are you a movie buff? Let's find out! Grab your popcorn 🍿 </p>
-<div class="row">
-            <div class="play-button">
-                {% if current_user.is_authenticated %}
-                    <a class="btn btn-primary btn-lg btn-block play" href="{{ url_for('get_question') }}">Play</a>
-                {% endif %}
-            </div>
+<div class="container main-body">
+  <p> Are you a movie buff? Let's find out! Grab your popcorn 🍿 </p>
+  <div class="row">
+    <div class="play-button">
+      {% if current_user.is_authenticated %}
+      <a class="btn btn-primary btn-lg btn-block play" href="{{ url_for('get_question') }}">Play</a>
+      {% endif %}
+    </div>
 
-            <div class="play-button">
-                {% if not current_user.is_authenticated %}
-                    <a href="{{ url_for('login_player') }}" class="btn btn-primary btn-lg btn-block play">Play</a>
-                {% endif %}
-            </div>
-</div>
+    <div class="play-button">
+      {% if not current_user.is_authenticated %}
+      <a href="{{ url_for('login_player') }}" class="btn btn-primary btn-lg btn-block play">Play</a>
+      {% endif %}
+    </div>
+  </div>
 
 
-
-{% include "footer.html" %}
+  {% include "footer.html" %}
 </div>
 </body>
 </html>
