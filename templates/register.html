@@ -3,25 +3,60 @@
 <html>
 {% include "header.html" %}
 
-	<body>
-		<div class="container">
-			<h1>Sign Up Here</h1>
-			{% if error %}
-    		<p style="color:red; font-size:16px"> {{ error }} </p>
-			{% endif %}
-			<form method="POST" action="{{ url_for('register_player') }}">
-				{{ form.csrf_token }}
+<body>
+<div class="container main-body">
+  <h1>Sign Up Here</h1>
+  {% if error %}
+  <p style="color:red; font-size:16px"> {{ error }} </p>
+  {% endif %}
+<!--  <form class="form" method="POST" action="{{ url_for('register_player') }}">-->
+
+<!--    {{ form.csrf_token }}-->
+
+<!--    <div class="form-group">-->
+<!--      <label>First Name</label>-->
+<!--      <input class="form-control form-control-lg" type="text" id="first_name" name="first_name" placeholder="First Name">-->
+<!--    </div>-->
+
+<!--		    <div class="form-group">-->
+<!--      <label>Last Name</label>-->
+<!--      <input class="form-control form-control-lg" type="text" name="last_name" id="last_name" placeholder="Last Name">-->
+<!--    </div>-->
+
+<!--				    <div class="form-group">-->
+<!--      <label for="email">Email</label>-->
+<!--      <input class="form-control form-control-lg" type="email" name="email" id="email" placeholder="Email address">-->
+<!--    </div>-->
+
+<!--				    <div class="form-group">-->
+<!--      <label for="password" >Password</label>-->
+<!--      <input class="form-control form-control-lg" type="password" name="password" id="password" placeholder="Password">-->
+<!--    </div>-->
+
+<!--  <input type="submit" value="Sign Up">-->
+
+
+<!--  </form>-->
+
+
+  <div class="forms">
+      <!--					original code -->
+      <form class="form-group" method="POST" action="{{ url_for('register_player') }}">
+        {{ form.csrf_token }}
         {{ form.first_name.label }} {{ form.first_name(size=100) }}
-				{{ form.last_name.label }} {{ form.last_name(size=100) }}
-				{{ form.email.label }} {{ form.email(size=100) }}
-				{{ form.password.label }} {{ form.password(size=100) }}
-				<input type="submit" value="Sign Up">
-			</form>
-		</div>
-		<a style="color:blue; font-size:20px; text-decoration: underline;" class="nav-link" href="/login">I'm already registered. Login instead.</a>
+        {{ form.last_name.label }} {{ form.last_name(size=100) }}
+        {{ form.email.label }} {{ form.email(size=100) }}
+        {{ form.password.label }} {{ form.password(size=100) }}
+        <input type="submit" value="Sign Up">
+      </form>
+    </div>
+  <a style="color:blue; font-size:20px; text-decoration: underline;" class="nav-link" href="/login">I'm already
+  registered. Login instead.</a>
 
-	{% include "footer.html" %}
+{% include "footer.html" %}
+</div>
 
-	</body>
+
+</body>
 </html>
 

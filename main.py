@@ -25,6 +25,12 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///trivia-collection.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config["SQLALCHEMY_ECHO"] = True
 
+app.config['ENV'] = 'development'
+
+app.config['DEBUG'] = True
+app.config['TESTING'] = True
+app.config['TEMPLATES_AUTO_RELOAD'] = True
+
 db = SQLAlchemy(app)
 
 login_manager = LoginManager()
@@ -224,6 +230,8 @@ def logout():
 # TODO: Able to add popcorn points components to database.
 
 # TODO: Increase the # of characters on question text on database"
+
+# TODO: Make form responsive
 
 
 

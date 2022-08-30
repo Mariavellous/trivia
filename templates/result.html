@@ -3,6 +3,7 @@
 {% include "header.html" %}
 
 <body>
+<div class="main-body">
 {% if error %}
     		<p style="color:red; font-size:16px"> {{ error }} </p>
   <p> The correct answer is: {{ correct_answer }}</p>
@@ -16,6 +17,6 @@
 <p> Thank you for playing! </p>
 
 {% include "footer.html" %}
-
+ </div>
 </body>
 </html>
