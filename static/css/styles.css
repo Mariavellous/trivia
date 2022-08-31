@@ -20,6 +20,11 @@ font-family: 'Rubik Maze', cursive;
   font-size: 1.5rem;
 }
 
+/*.user-greeting {*/
+/*  font-size: 1.5rem;*/
+/*  color: white;*/
+/*}*/
+
 #navbarResponsive {
   flex-grow: 0;
 }
@@ -64,7 +69,9 @@ font-family: 'Rubik Maze', cursive;
 .forms form {
   display: flex;
   flex-direction: column;
-  max-width: 500px
+  /*flex-grow: 1;*/
+  /*padding: 100px;*/
+  max-width: 400px
 }
 
 .forms form label {
