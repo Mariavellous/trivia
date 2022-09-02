@@ -20,10 +20,10 @@ font-family: 'Rubik Maze', cursive;
   font-size: 1.5rem;
 }
 
-/*.user-greeting {*/
-/*  font-size: 1.5rem;*/
-/*  color: white;*/
-/*}*/
+.user-greeting {
+  font-size: 1.5rem;
+  color: white;
+}
 
 #navbarResponsive {
   flex-grow: 0;
@@ -71,7 +71,7 @@ font-family: 'Rubik Maze', cursive;
   flex-direction: column;
   /*flex-grow: 1;*/
   /*padding: 100px;*/
-  max-width: 400px
+  max-width: 450px
 }
 
 .forms form label {

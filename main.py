@@ -231,8 +231,8 @@ def logout():
 
 # TODO: Increase the # of characters on question text on database"
 
-# TODO: Make form responsive
-
+# TODO: Save player's answer to guess database and add popcorn points
+# TODO: Only let player guess less than 5 points.
 
 
 
