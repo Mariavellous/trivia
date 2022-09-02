@@ -1,3 +1,4 @@
+from datetime import date
 import html
 
 
@@ -9,7 +10,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, EmailField, RadioField
 from wtforms.validators import DataRequired
-from flask_login import UserMixin, LoginManager, login_user, logout_user, login_required
+from flask_login import UserMixin, LoginManager, login_user, logout_user, login_required, current_user
 import json
 from flask_bootstrap import Bootstrap5
 
@@ -125,24 +126,38 @@ def show_question(trivia_id):
     return render_template("trivia.html", form=trivia_form, question=question, trivia_id=trivia_id, popcorn=popcorn)
 
 
-# responsible for retrieving player's answer
+# responsible for retrieving player's answer and comparing player_answer to correct_answer
 @app.route('/question/<int:trivia_id>', methods=["POST"])
 @login_required
 def show_player_answer(trivia_id):
     trivia = Question.query.get(trivia_id)
+    # retrieve player_answer from the form
     player_answer = request.form.get("options")
-    # save player_answer to the guess database
-    print(player_answer)
+    # print(player_answer)
+    # save player's answer to the Guess database
+    new_guess = Guess()
+    new_guess.player_id = current_user.id
+    new_guess.question_id = trivia_id
+    new_guess.player_answer = player_answer
+    new_guess.played_on = date.today()
     error = None
+
+    # Compare player's answer to the correct answer
     correct_answer = trivia.correct_answer
     if player_answer == trivia.correct_answer:
+        new_guess.result = True
+        db.session.add(new_guess)
+        db.session.commit()
         # State Player gets the correct answer
-        # Add popcorn to user's profile
+        # TODO: Add popcorn to user's profile
         print("Your answer is right.")
         # Add popcorn to user's profile
         popcorn = "Here are your popcorn points"
         return render_template("result.html", popcorn=popcorn, correct_answer=correct_answer)
     else:
+        new_guess.result = False
+        db.session.add(new_guess)
+        db.session.commit()
         error = f"Sorry, {player_answer} is wrong."
         return render_template("result.html", error=error, correct_answer=correct_answer)
 
@@ -232,7 +247,7 @@ def logout():
 
 # TODO: Increase the # of characters on question text on database"
 
-# TODO: Save player's answer to guess database and add popcorn points
+# TODO: add popcorn points if player answer the question correctly.
 # TODO: Only let player guess less than 5 points.
 
 
