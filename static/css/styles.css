@@ -54,6 +54,16 @@ font-family: 'Rubik Maze', cursive;
 
 }
 
+.goodbye-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Rubik', sans-serif;
+  font-size: 1.5rem;
+  padding: 150px;
+  color: #8c0615;
+}
+
 .play-button {
   padding-bottom: 100px;
 }

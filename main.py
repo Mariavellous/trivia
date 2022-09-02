@@ -84,13 +84,20 @@ def add_trivia():
 @app.route('/play')
 @login_required
 def get_question():
+    error = None
     # if count of trivia is less than 3 keep going. Otherwise, say "come play again tomorrow"
-    new_trivia_id = add_trivia()
-    # return new_trivia_id
-    print(new_trivia_id)
-    return redirect(url_for("show_question", trivia_id=new_trivia_id))
+    num_questions = Guess.query.filter(Guess.player_id == current_user.id, Guess.played_on == date.today()).count()
+    if num_questions < 3:
+        new_trivia_id = add_trivia()
+        # return new_trivia_id
+        print(new_trivia_id)
+        return redirect(url_for("show_question", trivia_id=new_trivia_id))
+    else:
+        return redirect(url_for("goodbye"))
 
-
+@app.route('/goodbye')
+def goodbye():
+    return render_template("goodbye.html")
 
 # Render the main page template
 @app.route('/')
