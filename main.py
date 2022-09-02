@@ -79,11 +79,11 @@ def add_trivia():
     return new_trivia.id
 
 
-# new_trivia_id = add_trivia()
-
+# Responsible for showing the trivia questions to player
 @app.route('/play')
 @login_required
 def get_question():
+    # if count of trivia is less than 3 keep going. Otherwise, say "come play again tomorrow"
     new_trivia_id = add_trivia()
     # return new_trivia_id
     print(new_trivia_id)
@@ -103,11 +103,11 @@ class TriviaForm(FlaskForm):
 
     options = RadioField("Choice", choices=[("A", "A"), ("B", "B"), ("C", "C"), ("D", "D")], validators=[DataRequired()])
     # choices = RadioField("Choice", choices=[("A", "B", "C", "D")], validators=[DataRequired()])
-
     submit = SubmitField("Register", validators=[DataRequired()])
 
 # responsible for showing the question to user
 @app.route('/question/<int:trivia_id>', methods=["GET"])
+@login_required
 def show_question(trivia_id):
     # popcorn = player.points
     trivia_form = TriviaForm()
@@ -125,12 +125,13 @@ def show_question(trivia_id):
     return render_template("trivia.html", form=trivia_form, question=question, trivia_id=trivia_id, popcorn=popcorn)
 
 
-
 # responsible for retrieving player's answer
 @app.route('/question/<int:trivia_id>', methods=["POST"])
+@login_required
 def show_player_answer(trivia_id):
     trivia = Question.query.get(trivia_id)
     player_answer = request.form.get("options")
+    # save player_answer to the guess database
     print(player_answer)
     error = None
     correct_answer = trivia.correct_answer
