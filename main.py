@@ -51,7 +51,7 @@ class Player(db.Model, UserMixin):
 
 class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    text = db.Column(db.String(5000), db.CheckConstraint('text > 0'), nullable=False)
+    text = db.Column(db.String(7500), db.CheckConstraint('text > 0'), nullable=False)
     correct_answer = db.Column(db.String(1000), db.CheckConstraint('correct_answer > 0'), nullable=False)
     # this is a string of data object
     choices = db.Column(db.String(1000), db.CheckConstraint('choices > 0'), nullable=False)
@@ -157,6 +157,7 @@ def show_player_answer(trivia_id):
         db.session.commit()
         # State Player gets the correct answer
         # TODO: Add popcorn to user's profile
+        # popcorn_points = current points + 10
         print("Your answer is right.")
         # Add popcorn to user's profile
         popcorn = "Here are your popcorn points"
@@ -252,10 +253,7 @@ def logout():
 
 # TODO: Able to add popcorn points components to database.
 
-# TODO: Increase the # of characters on question text on database"
-
 # TODO: add popcorn points if player answer the question correctly.
-# TODO: Only let player guess less than 5 points.
 
 
 
