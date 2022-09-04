@@ -14,11 +14,10 @@
 
   {% else %}
   <h3> {{correct_answer}} is correct! </h3>
+  <p> "Great Job. Here are {{ popcorn }} 🍿 points!" </p>
   {% endif %}
 
-  <p> "Great Job. Here are {{ popcorn }} 🍿 points!" </p>
-
-  <h4> Current 🍿 Points: {{ popcorn_points }} </h4>
+  <h4> You currently have {{ popcorn_points }} 🍿 Points. </h4>
   <a class="btn btn-secondary" href="/play" role="button">Next</a>
 
 </div>
