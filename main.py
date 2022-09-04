@@ -153,15 +153,16 @@ def show_player_answer(trivia_id):
     correct_answer = trivia.correct_answer
     if player_answer == trivia.correct_answer:
         new_guess.result = True
+        # TODO: Add popcorn to user's profile
+        # popcorn_points = current_user.points + 10
+        current_user.points += 10
         db.session.add(new_guess)
         db.session.commit()
         # State Player gets the correct answer
-        # TODO: Add popcorn to user's profile
-        popcorn_points = current_user.points + 10
         print("Your answer is right.")
         # Add popcorn to user's profile
-        popcorn = "Here are your popcorn points"
-        return render_template("result.html", popcorn=popcorn, correct_answer=correct_answer, popcorn_points=popcorn_points)
+        popcorn = "Here is 10 popcorn points"
+        return render_template("result.html", popcorn=popcorn, correct_answer=correct_answer, popcorn_points=current_user.points)
     else:
         new_guess.result = False
         db.session.add(new_guess)
