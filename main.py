@@ -46,7 +46,7 @@ class Player(db.Model, UserMixin):
     # email_address VARCHAR(50) UNIQUE NOT NULL CHECK(email_address LIKE '%@%.%'),
     email_address = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.String(), db.CheckConstraint('password > 0'), unique=True, nullable=False)
-    # points = db.Column(db.Integer, nullable=True)
+    points = db.Column(db.Integer, default=0)
 
 
 class Question(db.Model):
