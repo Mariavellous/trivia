@@ -125,7 +125,7 @@ def show_question(trivia_id):
     print(trivia.correct_answer)
     question = trivia.text
     options = json.loads(trivia.choices)
-    popcorn = "10 points"
+    popcorn = current_user.points
     trivia_form.options.choices[0] = options[0]
     trivia_form.options.choices[1] = options[1]
     trivia_form.options.choices[2] = options[2]
@@ -157,11 +157,11 @@ def show_player_answer(trivia_id):
         db.session.commit()
         # State Player gets the correct answer
         # TODO: Add popcorn to user's profile
-        # popcorn_points = current points + 10
+        popcorn_points = current_user.points + 10
         print("Your answer is right.")
         # Add popcorn to user's profile
         popcorn = "Here are your popcorn points"
-        return render_template("result.html", popcorn=popcorn, correct_answer=correct_answer)
+        return render_template("result.html", popcorn=popcorn, correct_answer=correct_answer, popcorn_points=popcorn_points)
     else:
         new_guess.result = False
         db.session.add(new_guess)
