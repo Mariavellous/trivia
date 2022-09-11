@@ -168,7 +168,7 @@ def show_player_answer(trivia_id):
         db.session.add(new_guess)
         db.session.commit()
         error = f"Sorry, {player_answer} is wrong."
-        return render_template("result.html", error=error, correct_answer=correct_answer)
+        return render_template("result.html", error=error, correct_answer=correct_answer, popcorn_points=current_user.points)
 
 
 # Register and Login Users
