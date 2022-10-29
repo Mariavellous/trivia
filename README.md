@@ -1,5 +1,6 @@
 # The Best Movie Trivia Game 🎬
 Do you want some popcorn? 🍿
+Are you a movie buff?
 [https://best-movie-trivia.herokuapp.com](https://best-movie-trivia.herokuapp.com/)
 
 ## How to run the code.
@@ -87,4 +88,3 @@ The server then returns a response of all data needed to display in the frontend
 
 * I want to add the ability for players to share their 'popcorn points' in social media
 * I want to add the ability for players to redeem 'popcorn points' for rewards such as movie tickets, popcorn at the movie theater, etc.
-* I want to be able to partner with various movie companies and gather movie specific trivia questions

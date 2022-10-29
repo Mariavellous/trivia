@@ -1,11 +1,8 @@
 from datetime import date
 import html
-
-
 from TriviaQuestion import TriviaQuestion
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
-import json
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, EmailField, RadioField
@@ -13,21 +10,27 @@ from wtforms.validators import DataRequired
 from flask_login import UserMixin, LoginManager, login_user, logout_user, login_required, current_user
 import json
 from flask_bootstrap import Bootstrap5
-
-
+import os
 from sqlalchemy import CheckConstraint
 
+# # library that takes key values in .env and places them in the "environment/computer" (where app is running)
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = 'a random string'
+# app.secret_key = 'a random string'
+# generates the CSRF token similar to the Flask app secret key
+app.config["SECRET_KEY"] = os.environ["TRIVIA_SECRET_KEY"]
 bootstrap = Bootstrap5(app)
+
 # create database in sqlite for now
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///trivia-collection.db'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///trivia-collection.db'
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("TRIVIA_DATABASE_URL")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config["SQLALCHEMY_ECHO"] = True
 
 app.config['ENV'] = 'development'
-
 app.config['DEBUG'] = True
 app.config['TESTING'] = True
 app.config['TEMPLATES_AUTO_RELOAD'] = True
@@ -36,7 +39,6 @@ db = SQLAlchemy(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
-
 
 
 class Player(db.Model, UserMixin):
@@ -80,7 +82,17 @@ def add_trivia():
     return new_trivia.id
 
 
-# Responsible for showing the trivia questions to player
+# Render the main page template
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+# Render the about page template
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+# Responsible for displaying max_allowed trivia questions of the day @app.route('/play')
 @app.route('/play')
 @login_required
 def get_question():
@@ -95,16 +107,6 @@ def get_question():
     else:
         return redirect(url_for("goodbye"))
 
-@app.route('/goodbye')
-def goodbye():
-    return render_template("goodbye.html")
-
-# Render the main page template
-@app.route('/')
-def home():
-    return render_template('index.html')
-
-
 
 # Create WTForms for Trivia Question
 class TriviaForm(FlaskForm):
@@ -113,7 +115,8 @@ class TriviaForm(FlaskForm):
     # choices = RadioField("Choice", choices=[("A", "B", "C", "D")], validators=[DataRequired()])
     submit = SubmitField("Register", validators=[DataRequired()])
 
-# responsible for showing the question to user
+
+# responsible for showing the specific trivia question to player
 @app.route('/question/<int:trivia_id>', methods=["GET"])
 @login_required
 def show_question(trivia_id):
@@ -171,6 +174,12 @@ def show_player_answer(trivia_id):
         return render_template("result.html", error=error, correct_answer=correct_answer, popcorn_points=current_user.points)
 
 
+# Render the goodbye template showing the Players they have reached the max allowed trivia questions for the day and
+# to return again tomorrow.
+@app.route('/goodbye')
+def goodbye():
+    return render_template("goodbye.html")
+
 # Register and Login Users
 # Register new users
 @app.route('/register', methods=["GET", "POST"])
@@ -202,11 +211,13 @@ def register_player():
         db.session.commit()
         return redirect(url_for("login_player"))
 
+
 # Create WTForms for Login
 class LoginForm(FlaskForm):
     email = EmailField("Email")
     password = PasswordField("Password")
     login = SubmitField("Login")
+
 
 # Create WTForms for Register
 class RegisterForm(FlaskForm):
@@ -217,10 +228,10 @@ class RegisterForm(FlaskForm):
     register = SubmitField("Register", validators=[DataRequired()])
 
 
-
 @login_manager.user_loader
 def load_user(user_id):
     return Player.query.get(user_id)
+
 
 # Player will login successfully if check_password_hash == True
 @app.route('/login', methods=["GET", "POST"])
@@ -244,38 +255,16 @@ def login_player():
             error = "Incorrect password. Please try again."
             return render_template("login.html", error=error, form=login_form)
 
+
 # User Logout
 @app.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for("home"))
 
-
-
-# TODO: Able to add popcorn points components to database.
-
-# TODO: add popcorn points if player answer the question correctly.
-
-
-
-
-
-# def show_trivia('/trivia', methods=['POST']):
-    # Fetch the question/answer from API.
-    # Update the QUESTION TABLE
-    # new_trivia = Question(text=question_data["question"], correct_answer=question_data["correct_answer"],
-    #                       choices=question_data["incorrect_answer"])
-    # db.session.add(new_trivia)
-    # db.session.commit()
-
-# RESTFUL API routes
-# /about
-# (/) def get_all_trivia (past trivia's)
-# /trivia
-# /trivia/<int:id>
-# /trivia/<int:id>/player_answer
-# /trivia/<int:id>/correct_answer
-
+# TODO: make sure email caps/uncap letter still works
+# TODO: fix apostrophe on choices
+# TODO: fix hamburger menu
 
 
 if __name__ == "__main__":
