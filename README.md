@@ -24,7 +24,7 @@ specific `player_id` in the `Player` table. The player's `points` on the `Player
 the question correctly, which is stored in the 'result' column of the 'Guess' table.
 
 ![Movie Trivia Database Brainstorm](document/movie_trivia_database_brainstorm.jpg | width=500)
-<img src="https://github.com/Mariavellous/trivia/blob/2b0081fa621dd18dfceb2f2fb1fab1bb8fd9bf62/document/movie_trivia_database_brainstorm.jpg" width="250" 
+<img src="https://github.com/Mariavellous/trivia/blob/2b0081fa621dd18dfceb2f2fb1fab1bb8fd9bf62/document/movie_trivia_database_brainstorm.jpg" width="250"/>
 
 ## Code Structure
 Created a `TriviaQuestion Class` responsible for
