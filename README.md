@@ -3,46 +3,7 @@ Do you want some popcorn? 🍿
 Are you a movie buff?
 [https://best-movie-trivia.herokuapp.com](https://best-movie-trivia.herokuapp.com/)
 
-## How to run the code.
-
-### 1. Database
-
-For the purposes of this demo, a SQLite db file has already been created with sample data in `trivia-collection.db`
-
-### 2. Environment Variables
-
-The `.env` file stores the secret key and database url to protect the database and any other important information.
-
-Place environment variables inside a file named `.env`
-
-```
-TRIVIA_SECRET_KEY=popcorn
-TRIVIA_DATABASE_URL=sqlite:///trivia-collection.db
-```
-
-
-
-### 3. Install all necessary requirements.
-
-I used the `flask` framework to develop the web application along with `sqlachemy` to communicate with the database.
-I used `flask_login_manager` to help with user authentication.
-
-Install the python dependencies
-
-```sh
-pip3 intall -r requirements.txt
-```
-
-### 4. Start the server
-
-```sh
-python3 main.py
-```
-
-### 5. Play the game
-
-Open [http://127.0.0.1:5008](http://127.0.0.1:5008) in your browser
-
+![Movie Trivia Image](document/movie_trivia.png)
 
 ## Thought Process
 
@@ -83,6 +44,47 @@ Created a `TriviaQuestion Class` responsible for
 
 After most http requests from the frontend, the database gets updated and stores the new data in the respective tables.
 The server then returns a response of all data needed to display in the frontend.
+
+## How to run the code.
+
+### 1. Database
+
+For the purposes of this demo, a SQLite db file has already been created with sample data in `trivia-collection.db`
+
+### 2. Environment Variables
+
+The `.env` file stores the secret key and database url to protect the database and any other important information.
+
+Place environment variables inside a file named `.env`
+
+```
+TRIVIA_SECRET_KEY=popcorn
+TRIVIA_DATABASE_URL=sqlite:///trivia-collection.db
+```
+
+
+### 3. Install all necessary requirements.
+
+I used the `flask` framework to develop the web application along with `sqlachemy` to communicate with the database.
+I used `flask_login_manager` to help with user authentication.
+
+Install the python dependencies
+
+```sh
+pip3 intall -r requirements.txt
+```
+
+### 4. Start the server
+
+```sh
+python3 main.py
+```
+
+### 5. Play the game
+
+Open [http://127.0.0.1:5008](http://127.0.0.1:5008) in your browser
+
+
 
 ### TODO
 
